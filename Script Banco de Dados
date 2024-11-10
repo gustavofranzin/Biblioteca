@@ -1,0 +1,25 @@
+CREATE TABLE usuarios (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    data_cadastro DATE NOT NULL CHECK (data_cadastro <= CURRENT_DATE),
+    telefone VARCHAR(25)
+);
+
+CREATE TABLE livros (
+    id SERIAL PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    autor VARCHAR(255) NOT NULL,
+    isbn VARCHAR(20) UNIQUE NOT NULL,
+    data_publicacao DATE NOT NULL,
+    categoria VARCHAR(50)
+);
+
+CREATE TABLE emprestimos (
+    id SERIAL PRIMARY KEY,
+    usuario_id INTEGER REFERENCES usuarios(id),
+    livro_id INTEGER REFERENCES livros(id),
+    data_emprestimo DATE NOT NULL CHECK (data_emprestimo <= CURRENT_DATE),
+    data_devolucao DATE,
+    status VARCHAR(50)
+);
